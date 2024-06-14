@@ -86,24 +86,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Feedback form submission handling
     document.getElementById('feedbackForm').addEventListener('submit', function(e) {
         e.preventDefault(); // Prevent the normal form submission
-
-        const feedback = document.getElementById('feedback').value;
-
-        // Ensure you have the correct service ID and template ID configured in EmailJS
-        var templateParams = {
-            from_name: 'Feedback User', // Example, adjust as needed
-            message: feedback,
-            reply_to: 'jadetindoy@hotmail.com'
-        };
-
-        emailjs.send('service_ji5hkp9', 'template_7qu68we', templateParams)
+        
+        emailjs.sendForm('service_ji5hkp9', 'template_7qu68we', this)
             .then(function(response) {
                console.log('SUCCESS!', response.status, response.text);
                alert('Feedback sent successfully!');
-               document.getElementById('feedback'). value = ''; // Clear the textarea after sending feedback
+               document.getElementById('feedback').value = ''; // Clear the textarea after sending feedback
+               document.getElementById('email').value = ''; // Clear the email field
+               document.getElementById('marketingConsent').checked = false; // Reset the checkbox
             }, function(error) {
                console.log('FAILED...', error);
-               alert('Failed to send feedback.');
+               alert('Failed to send feedback. Error: ' + error.text);
             });
     });
 });

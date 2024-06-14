@@ -50,16 +50,23 @@
                 <div id="result" class="mt-4"></div>
                 <button id="downloadExcel" class="btn btn-success mt-3">Download Excel</button>
                 <button id="downloadPDF" class="btn btn-danger mt-3">Download PDF</button>
-                <div class="feedback-form mt-4">
-                    <h4>Send Us Your Feedback</h4>
-                    <form id="feedbackForm">
-                        <div class="form-group">
-                            <label for="feedback">Feedback:</label>
-                            <textarea class="form-control" id="feedback" rows="3" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-info">Send Feedback</button>
-                    </form>
-                </div>
+                <form id="feedbackForm">
+                    <div class="form-group">
+                        <label for="email">Your Email (optional):</label>
+                        <input type="email" class="form-control" name="user_email" id="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback">Feedback:</label>
+                        <textarea class="form-control" name="message" id="feedback" rows="3" required></textarea>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="marketingConsent" name="marketing_consent">
+                        <label class="form-check-label" for="marketingConsent">I agree to receive marketing communications and promotional offers.</label>
+                    </div>
+                    <button type="submit" class="btn btn-info">Send Feedback</button>
+                </form>
+                <p class="small text-muted mt-2">By providing your email, you consent to us using the provided email address for marketing purposes and promotional communications. You can unsubscribe at any time.</p>                
+
             </div>
         </div>
     </div>
