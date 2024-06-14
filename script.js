@@ -72,7 +72,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
             </table>
         `;
-
+        function downloadExcel(data) {
+            const worksheet = XLSX.utils.json_to_sheet(data);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'MP2 Savings Breakdown');
+            XLSX.writeFile(workbook, 'MP2_Savings_Breakdown.xlsx');
+        }
+        
+        function downloadPDF(data) {
+            const doc = new jsPDF();
+            doc.autoTable({
+                head: [['Year', 'Yearly Contributions', 'Yearly Dividends', 'Total Earned', 'Balance at Year End']],
+                body: data.map(item => [item.Year, item['Yearly Contributions'], item['Yearly Dividends'], item['Total Earned'], item['Balance at Year End']])
+            });
+            doc.save('MP2_Savings_Breakdown.pdf');
+        }
         // Add download functionality
         document.getElementById('downloadExcel').addEventListener('click', function() {
             downloadExcel(breakdownData);
