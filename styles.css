@@ -14,3 +14,7 @@ body {
     padding-right: 50px;
     font-size: 30px;
 } 
+button[disabled] {
+    opacity: 0.5; /* Lower opacity makes the button look inactive */
+    cursor: not-allowed; /* Changes the cursor to indicate the button cannot be clicked */
+}
