@@ -57,20 +57,22 @@ document.addEventListener('DOMContentLoaded', function() {
             <p>Total Dividends: PHP ${totalDividends.toFixed(2)}</p>
             <p>Total Amount after ${years} years: PHP ${totalAmount.toFixed(2)}</p>
             <h4>Yearly Breakdown</h4>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Year</th>
-                        <th>Yearly Contributions</th>
-                        <th>Yearly Dividends</th>
-                        <th>Total Earned (Contributions + Dividends)</th>
-                        <th>Balance at Year End</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${breakdown}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Yearly Contributions</th>
+                            <th>Yearly Dividends</th>
+                            <th>Total Earned (Contributions + Dividends)</th>
+                            <th>Balance at Year End</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${breakdown}
+                    </tbody>
+                </table>
+            </div>
         `;
         function downloadExcel(data) {
             const worksheet = XLSX.utils.json_to_sheet(data);
