@@ -119,6 +119,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 });
+$(function () {
+    $('[data-toggle="popover"]').popover({
+        html: true
+    });
+});
 
 function downloadExcel(data) {
     const worksheet = XLSX.utils.json_to_sheet(data);
