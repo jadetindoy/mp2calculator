@@ -18,3 +18,16 @@ button[disabled] {
     opacity: 0.5; /* Lower opacity makes the button look inactive */
     cursor: not-allowed; /* Changes the cursor to indicate the button cannot be clicked */
 }
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .form-control, .btn {
+        font-size: 14px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .form-control, .btn {
+        font-size: 16px;
+    }
+}
