@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Show/Hide fields based on contribution type
+    document.getElementById('contributionType').addEventListener('change', function() {
+        if (this.value === 'monthly') {
+            document.getElementById('monthlySavingsGroup').style.display = 'block';
+            document.getElementById('yearlySavingsGroup').style.display = 'none';
+            document.getElementById('yearlySavings').required = false;
+            document.getElementById('monthlySavings').required = true;
+        } else {
+            document.getElementById('monthlySavingsGroup').style.display = 'none';
+            document.getElementById('yearlySavingsGroup').style.display = 'block';
+            document.getElementById('monthlySavings').required = false;
+            document.getElementById('yearlySavings').required = true;
+        }
+    });
+
     // Calculator form submission handling
     document.getElementById('calculator-form').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -6,11 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Calculator form submitted.');
 
         const initialSavings = parseFloat(document.getElementById('initialSavings').value);
-        const monthlySavings = parseFloat(document.getElementById('monthlySavings').value);
+        const contributionType = document.getElementById('contributionType').value;
+        const monthlySavings = contributionType === 'monthly' ? parseFloat(document.getElementById('monthlySavings').value) : 0;
+        const yearlySavings = contributionType === 'yearly' ? parseFloat(document.getElementById('yearlySavings').value) : 0;
         const years = parseInt(document.getElementById('years').value);
         const dividendRate = parseFloat(document.getElementById('dividendRate').value) / 100;
 
-        if (isNaN(initialSavings) || isNaN(monthlySavings) || isNaN(years) || isNaN(dividendRate)) {
+        if (isNaN(initialSavings) || (contributionType === 'monthly' && isNaN(monthlySavings)) || (contributionType === 'yearly' && isNaN(yearlySavings)) || isNaN(years) || isNaN(dividendRate)) {
             alert('Please enter valid numbers');
             return;
         }
@@ -22,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let breakdownData = [];
 
         for (let year = 1; year <= years; year++) {
-            let yearlyContributions = monthlySavings * 12;
+            let yearlyContributions = contributionType === 'monthly' ? monthlySavings * 12 : yearlySavings;
             totalContributions += yearlyContributions;
             balance += yearlyContributions;
 
@@ -74,21 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </table>
             </div>
         `;
-        function downloadExcel(data) {
-            const worksheet = XLSX.utils.json_to_sheet(data);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, 'MP2 Savings Breakdown');
-            XLSX.writeFile(workbook, 'MP2_Savings_Breakdown.xlsx');
-        }
-        
-        function downloadPDF(data) {
-            const doc = new jsPDF();
-            doc.autoTable({
-                head: [['Year', 'Yearly Contributions', 'Yearly Dividends', 'Total Earned', 'Balance at Year End']],
-                body: data.map(item => [item.Year, item['Yearly Contributions'], item['Yearly Dividends'], item['Total Earned'], item['Balance at Year End']])
-            });
-            doc.save('MP2_Savings_Breakdown.pdf');
-        }
+
         // Add download functionality
         document.getElementById('downloadExcel').addEventListener('click', function() {
             downloadExcel(breakdownData);
@@ -116,3 +119,19 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 });
+
+function downloadExcel(data) {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'MP2 Savings Breakdown');
+    XLSX.writeFile(workbook, 'MP2_Savings_Breakdown.xlsx');
+}
+
+function downloadPDF(data) {
+    const doc = new jsPDF();
+    doc.autoTable({
+        head: [['Year', 'Yearly Contributions', 'Yearly Dividends', 'Total Earned', 'Balance at Year End']],
+        body: data.map(item => [item.Year, item['Yearly Contributions'], item['Yearly Dividends'], item['Total Earned'], item['Balance at Year End']])
+    });
+    doc.save('MP2_Savings_Breakdown.pdf');
+}

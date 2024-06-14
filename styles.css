@@ -14,26 +14,29 @@ body {
     padding-right: 50px;
     font-size: 30px;
 } 
-button[disabled] {
-    opacity: 0.5; /* Lower opacity makes the button look inactive */
-    cursor: not-allowed; /* Changes the cursor to indicate the button cannot be clicked */
-}
 /* Extra small devices (phones, 600px and down) */
+button[disabled] {
+    opacity: 0.5; /* Make disabled buttons appear faded */
+    cursor: not-allowed; /* Show a 'not allowed' cursor on hover */
+}
+
+/* Custom responsive styles */
 @media only screen and (max-width: 600px) {
     .form-control, .btn {
         font-size: 14px;
     }
+
     .table-responsive {
         overflow-x: auto; /* Horizontal scroll for tables */
     }
-}
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
+    .container {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
 @media only screen and (min-width: 600px) {
     .form-control, .btn {
         font-size: 16px;
-    }
-    .table-responsive {
-        overflow-x: auto; /* Horizontal scroll for tables */
     }
 }
