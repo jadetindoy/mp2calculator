@@ -1,5 +1,5 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #291670;
 }
 
 .card {
@@ -7,3 +7,10 @@ body {
     margin: auto;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
+.container h1 {
+    color: white;
+    padding-bottom: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 30px;
+} 
