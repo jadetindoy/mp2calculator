@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pag-IBIG MP2 Savings Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("frf10DnWIK62YQvXJ"); // Your public key directly, no object needed
+        })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RMBFKD4B35"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RMBFKD4B35');
+    </script>
+    <style>
+        body {
+            background-color: #291670;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Pag-IBIG MP2 Savings Calculator</h1>
+        <button onclick="goHome()" class="btn btn-secondary mb-3">Back to Home</button>
+        <div class="card">
+            <div class="card-body">
+                <form id="calculator-form">
+                    <div class="form-group">
+                        <label for="initialSavings">Initial Savings (PHP):</label>
+                        <input type="number" class="form-control" id="initialSavings" placeholder="Enter initial amount (optional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="contributionType">Contribution Type:</label>
+                        <select class="form-control" id="contributionType">
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="monthlySavingsGroup">
+                        <label for="monthlySavings">Monthly Savings (PHP):</label>
+                        <input type="number" class="form-control" id="monthlySavings" placeholder="Enter amount" required>
+                    </div>
+                    <div class="form-group" id="yearlySavingsGroup" style="display: none;">
+                        <label for="yearlySavings">Yearly Savings (PHP):</label>
+                        <input type="number" class="form-control" id="yearlySavings" placeholder="Enter amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="years">Number of Years:</label>
+                        <input type="number" class="form-control" id="years" placeholder="Enter number of years" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dividendRate">Dividend Rate (%) <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#dividendModal">(Past rates)</button>:</label>
+                        <input type="number" step="0.01" class="form-control" id="dividendRate" placeholder="Enter dividend rate" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Calculate</button>
+                    <div class="alert alert-warning mt-3">
+                        <p>Note: This calculation may not be entirely accurate. For detailed information and accurate calculations, please contact Pag-IBIG directly at 8-724-4244 (8-Pag-IBIG) - available 24/7, or visit your nearest branch.</p>
+                    </div>
+                </form>
+                <div id="result" class="mt-4"></div>
+                <button id="downloadExcel" class="btn btn-success mt-3">Download Excel</button>
+                <button id="downloadPDF" class="btn btn-danger mt-3" disabled>Download PDF</button>
+                <form id="feedbackForm" class="mt-4">
+                    <div class="form-group">
+                        <label for="email">Your Email (optional):</label>
+                        <input type="email" class="form-control" name="user_email" id="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback">Feedback:</label>
+                        <textarea class="form-control" name="message" id="feedback" rows="3" required></textarea>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="marketingConsent" name="marketing_consent">
+                        <label class="form-check-label" for="marketingConsent">I agree to receive marketing communications and promotional offers.</label>
+                    </div>
+                    <button type="submit" class="btn btn-info">Send Feedback</button>
+                </form>
+                <p class="small text-muted mt-2">By providing your email, you consent to us using the provided email address for marketing purposes and promotional communications. You can unsubscribe at any time.</p>
+                
+                <!-- FAQ Section -->
+                <div class="faq mt-5">
+                    <h3>How to Get Started / FAQ</h3>
+                    <p><strong>How to use the MP2 Savings Calculator:</strong></p>
+                    <ul>
+                        <li>Enter your initial savings amount (optional).</li>
+                        <li>Select your contribution type (Monthly or Yearly).</li>
+                        <li>If you selected Monthly, enter your monthly savings amount.</li>
+                        <li>If you selected Yearly, enter your yearly savings amount.</li>
+                        <li>Enter the number of years you plan to save.</li>
+                        <li>Enter the expected dividend rate (in %).</li>
+                        <li>Click the "Calculate" button to see your savings breakdown and total amount after the specified years.</li>
+                    </ul>
+                    <p>If you have any questions or need further assistance, please contact Pag-IBIG directly at 8-724-4244 (8-Pag-IBIG) - available 24/7, or visit your nearest branch.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="dividendModal" tabindex="-1" aria-labelledby="dividendModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dividendModalLabel">Previous Dividend Rates</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>MP2 Savings Dividend Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>2023</td><td>7.05%</td></tr>
+                            <tr><td>2022</td><td>7.03%</td></tr>
+                            <tr><td>2021</td><td>6.00%</td></tr>
+                            <tr><td>2020</td><td>6.12%</td></tr>
+                            <tr><td>2019</td><td>7.23%</td></tr>
+                            <tr><td>2018</td><td>7.41%</td></tr>
+                            <tr><td>2017</td><td>8.11%</td></tr>
+                            <tr><td>2016</td><td>7.43%</td></tr>
+                            <tr><td>2015</td><td>5.34%</td></tr>
+                            <tr><td>2014</td><td>4.69%</td></tr>
+                            <tr><td>2013</td><td>4.58%</td></tr>
+                            <tr><td>2012</td><td>4.67%</td></tr>
+                            <tr><td>2011</td><td>4.63%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

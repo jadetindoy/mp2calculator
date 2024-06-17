@@ -1,5 +1,10 @@
 body {
-    background-color: #291670;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
 }
 
 .card {
@@ -14,12 +19,55 @@ body {
     padding-right: 50px;
     font-size: 30px;
 } 
+
 /* Extra small devices (phones, 600px and down) */
 button[disabled] {
     opacity: 0.5; /* Make disabled buttons appear faded */
     cursor: not-allowed; /* Show a 'not allowed' cursor on hover */
 }
-
+    /* Article Section */
+    .article {
+        margin-top: 50px;
+    }
+    .article-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-top: 15px;
+    }
+    .article-content img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+    }
+    .article-content p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    .article-1 h1 {
+        color: black;
+        font-size: 30px;
+        font-weight: 700;
+    }
+    .footer {
+        background-color: #f8f9fa;
+        padding: 40px 0;
+        border-top: 1px solid #e9ecef;
+    }
+    .footer a {
+        color: #6c757d;
+        text-decoration: none;
+    }
+    .footer a:hover {
+        text-decoration: underline;
+    }
+    .footer .social-icons a {
+        font-size: 20px;
+        margin-right: 15px;
+        color: #6c757d;
+    }
+    .footer .social-icons a:hover {
+        color: #495057;
+    }
 /* Custom responsive styles */
 @media only screen and (max-width: 600px) {
     .form-control, .btn {
@@ -33,6 +81,88 @@ button[disabled] {
     .container {
         padding-left: 5px;
         padding-right: 5px;
+    }
+}
+
+.navbar-brand img {
+    height: 40px;
+    width: auto;
+}
+.navbar {
+    background-color: #f8f9fa !important;
+}
+.navbar-brand img {
+    width: 180px;
+    height: auto;
+}
+.navbar-nav .nav-link {
+    font-size: 20px;
+    font-weight: 600;
+}
+.navbar-nav .nav-item {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+#loging {
+    padding-right: 80px;
+}
+.hero {
+    position: relative;
+    background-image: url('./src/explore.png');
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    border-radius: 15px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.hero .search-box {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 10px 40px;
+    border-radius: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+.hero .search-box input {
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    body {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .navbar-nav .nav-link {
+        font-size: 16px;
+    }
+    .hero {
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 300px;
+    }
+    .hero .search-box {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-nav .nav-item {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+    .hero {
+        margin-left: 10px;
+        margin-right: 10px;
+        height: 250px;
+    }
+    .hero .search-box {
+        padding: 5px 15px;
     }
 }
 @media only screen and (min-width: 600px) {
